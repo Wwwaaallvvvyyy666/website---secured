@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRIPLESIXX TOOLS - OBFUSCATE</title>
+    <meta name="description"
+        content="Professional TypeScript obfuscator with string encryption, control flow flattening, and dev tools blocking.">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-effects">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="grid-pattern"></div>
+    </div>
+
+    <div class="app-container">
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                        <path d="M2 17l10 5 10-5" />
+                        <path d="M2 12l10 5 10-5" />
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>TS <span class="accent">666</span></h1>
+                    <span class="tagline">OBFUSCATOR</span>
+                </div>
+            </div>
+            <nav class="nav-tabs">
+                <button class="tab-btn active" data-tab="obfuscate">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    Obfuscate
+                </button>
+                <button class="tab-btn" data-tab="transpile">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+                    </svg>
+                    Transpile
+                </button>
+                <button class="tab-btn" data-tab="format">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 6h16M4 12h16M4 18h12" />
+                    </svg>
+                    Format
+                </button>
+                <button class="tab-btn" data-tab="ast">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M12 2v4m0 12v4M2 12h4m12 0h4" />
+                    </svg>
+                    AST View
+                </button>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <section class="panel input-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="badge badge-input">INPUT</span>
+                        <span class="filename">source.ts</span>
+                    </div>
+                    <div class="panel-actions">
+                        <select id="languageSelect" class="lang-select">
+                            <option value="ts">TypeScript (.ts)</option>
+                            <option value="tsx">TSX (React)</option>
+                            <option value="js">JavaScript (.js)</option>
+                            <option value="jsx">JSX (React)</option>
+                        </select>
+                        <button id="loadSampleBtn" class="btn-icon" title="Load Sample Code">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <path d="M14 2v6h6" />
+                            </svg>
+                        </button>
+                        <button id="clearBtn" class="btn-icon" title="Clear">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <textarea id="inputCode" placeholder="// Paste your TypeScript code here...
+// Example:
+interface User {
+    name: string;
+    id: number;
+}
+
+const greet = (user: User): string => {
+    return `Hello, ${user.name}!`;
+};
+
+console.log(greet({ name: 'World', id: 1 }));"></textarea>
+            </section>
+
+            <div class="action-column">
+                <button id="processBtn" class="process-btn">
+                    <div class="btn-content">
+                        <svg id="processIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                        <span id="processText">OBFUSCATE</span>
+                    </div>
+                    <div class="btn-shine"></div>
+                </button>
+                <div class="stats" id="stats">
+                    <div class="stat">
+                        <span class="stat-label">Input</span>
+                        <span class="stat-value" id="inputSize">0 chars</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Output</span>
+                        <span class="stat-value" id="outputSize">0 chars</span>
+                    </div>
+                </div>
+            </div>
+
+            <section class="panel output-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="badge badge-output">OUTPUT</span>
+                        <span class="filename" id="outputFilename">obfuscated.js</span>
+                    </div>
+                    <div class="panel-actions">
+                        <button id="copyBtn" class="btn-icon" title="Copy to Clipboard">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                            </svg>
+                        </button>
+                        <button id="downloadBtn" class="btn-icon" title="Download">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <path d="M7 10l5 5 5-5" />
+                                <path d="M12 15V3" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div id="outputContainer">
+                    <textarea id="outputCode" readonly placeholder="// Output will appear here..."></textarea>
+                    <div id="astViewer" class="ast-viewer hidden"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="status">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Ready</span>
+            </div>
+            <div class="footer-info">
+                <span class="version">v2.0.0 Final</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="kntlmanis.js"></script>
+</body>
+
+</html>
